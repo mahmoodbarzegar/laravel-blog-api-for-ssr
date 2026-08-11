@@ -8,62 +8,48 @@
 [![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
 [![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com)
 [![Sanctum](https://img.shields.io/badge/Auth-Sanctum-blue)](https://laravel.com/docs/sanctum)
-[![Tests](https://img.shields.io/badge/Tests-PHPUnit-3776AB)](#-تست)
-[![License](https://img.shields.io/badge/License-MIT-green)](#-license)
+[![License](https://img.shields.io/badge/License-MIT-green)](#license)
 
 </div>
 
 ---
 
-<div dir="rtl" align="right">
+## درباره پروژه
 
-## 📖 فهرست
+این ریپو **فقط API** است — هیچ Bladeای رندر نمی‌شود و هیچ صفحه‌ای در اینجا ساخته نمی‌شود.
+فرانت‌اند (Nuxt 3 با SSR کامل) در ریپوی جداگانه‌ای قرار دارد و برای هر درخواست، از این API داده می‌گیرد.
+این جداسازی باعث می‌شود سئو به‌صورت واقعی از سمت فرانت حل شود، در حالی که بک‌اند صرفاً یک منبع داده‌ی
+تمیز و مستقل باقی می‌ماند — قابل استفاده برای اپ موبایل، پنل ادمین جدا، یا هر مصرف‌کننده‌ی دیگر در آینده.
 
-- [درباره پروژه](#-درباره-پروژه)
-- [امکانات](#-امکانات)
-- [پشته فناوری](#-پشته-فناوری)
-- [شروع سریع](#-شروع-سریع)
-- [متغیرهای محیطی](#-متغیرهای-محیطی)
-- [مستندات API](#-مستندات-api)
-- [مدل مجوزدهی](#-مدل-مجوزدهی)
-- [تست](#-تست)
-- [ساختار پروژه](#-ساختار-پروژه)
-- [مشارکت](#-مشارکت)
-- [لایسنس](#-license)
+## امکانات
 
-
-
-## ✨ امکانات
-
-- 📰 مدیریت کامل مقالات: عنوان، اسلاگ خودکار و یکتا، خلاصه، محتوای HTML، کاور، وضعیت (پیش‌نویس/منتشر/بایگانی)، حذف نرم (soft delete)
+- 📰 مدیریت کامل مقالات: عنوان، اسلاگ خودکار، خلاصه، محتوای HTML، کاور، وضعیت (پیش‌نویس/منتشر/بایگانی)
 - 🗂 دسته‌بندی و تگ (رابطه‌ی چند‌به‌چند)
-- 💬 نظرات تودرتو (Reply) با گردش تأیید (`pending` → `approved`/`rejected`)
-- 🔍 جستجوی فول‌تکست روی عنوان/خلاصه/محتوا
-- 🖼 آپلود و بهینه‌سازی خودکار تصویر (تبدیل به WebP با Intervention Image v4)
+- 💬 نظرات تودرتو با گردش تأیید (pending → approved/rejected)
+- 🔍 جستجوی فول‌تکست روی عنوان/خلاصه/محتوا (ایندکس MySQL FULLTEXT)
+- 🖼 آپلود و بهینه‌سازی خودکار تصویر (تبدیل به WebP با Intervention Image)
 - 🔐 احراز هویت مبتنی بر توکن با Laravel Sanctum + نقش‌های `admin` / `author` / `reader`
-- 📡 خروجی سئوی آماده در هر مقاله (`meta_title`, `meta_description`, `og_image`) + فید RSS
-- ✅ Form Request Validation، API Resource برای شکل‌دهی خروجی JSON، Policy برای مجوزدهی
-- 🧪 پوشش تست کامل با PHPUnit (روی SQLite حافظه‌ای، بدون نیاز به MySQL واقعی)
+- 📡 خروجی سئوی آماده در هر مقاله (`meta_title`, `meta_description`, `og_image`) + فید RSS (`/api/feed`)
+- ✅ Soft delete برای مقالات، Form Request Validation، API Resource برای شکل‌دهی خروجی JSON
 
-## 🛠  فناوری
+## پشته فناوری
 
 | بخش | فناوری |
 |---|---|
 | فریمورک | Laravel 11 |
-| دیتابیس | MySQL 8 (تست‌ها: SQLite in-memory) |
+| دیتابیس | MySQL 8 |
 | احراز هویت | Laravel Sanctum (Bearer Token) |
-| پردازش تصویر | Intervention Image v4 |
+| پردازش تصویر | Intervention Image v3 |
 | اسلاگ خودکار | spatie/laravel-sluggable |
-| تست | PHPUnit |
 
-## 🚀 شروع سریع
+## نصب و راه‌اندازی
 
 ### پیش‌نیازها
-- PHP 8.2+ (با اکستنشن GD یا Imagick)
+- PHP 8.2+
 - Composer
 - MySQL 8+
 
-### نصب
+### مراحل
 
 ```bash
 # ۱) کلون پروژه
@@ -96,18 +82,15 @@ API روی `http://localhost:8000/api` در دسترس خواهد بود.
 > **Email:** `admin@example.com` — **Password:** `password`
 > (حتماً در محیط production این رمز رو عوض کن.)
 
-## ⚙️ متغیرهای محیطی
+### متغیرهای مهم `.env`
 
 | متغیر | توضیح |
 |---|---|
+| `FRONTEND_URL` | آدرس فرانت‌اند Nuxt، برای CORS و لینک‌سازی در فید RSS |
 | `DB_*` | اطلاعات اتصال MySQL |
-| `FRONTEND_URL` | آدرس فرانت‌اند Nuxt — برای CORS و لینک‌سازی در فید RSS |
 | `SANCTUM_STATEFUL_DOMAINS` | دامنه‌های مجاز برای Sanctum |
-| `FILESYSTEM_DISK` | دیسک پیش‌فرض آپلود (`public`) |
 
-فایل کامل نمونه در [`.env.example`](.env.example) موجود است.
-
-## 📚 مستندات API
+## مستندات API
 
 ### مسیرهای عمومی (بدون نیاز به توکن)
 
@@ -142,7 +125,25 @@ API روی `http://localhost:8000/api` در دسترس خواهد بود.
 | GET | `/api/manage/comments/pending` | فقط admin | نظرات در انتظار تأیید |
 | PATCH | `/api/manage/comments/{comment}` | فقط admin | تأیید/رد نظر |
 
-## 🔒 مدل مجوزدهی
+## ساختار پروژه
+
+```
+app/
+├── Http/
+│   ├── Controllers/Api/   # کنترلرهای REST
+│   ├── Requests/          # Form Request Validation
+│   ├── Resources/         # شکل‌دهی خروجی JSON
+│   └── Middleware/        # میدل‌ور نقش ادمین
+├── Models/                # User, Post, Category, Tag, Comment
+└── Policies/               # PostPolicy (مجوز ویرایش/حذف)
+
+database/
+├── migrations/
+├── factories/
+└── seeders/
+```
+
+## نقش‌های کاربری
 
 | نقش | دسترسی |
 |---|---|
@@ -150,61 +151,12 @@ API روی `http://localhost:8000/api` در دسترس خواهد بود.
 | `author` | ایجاد/ویرایش/حذف مقالات خودش، ثبت تگ |
 | `reader` | ثبت‌نام، ورود، ثبت نظر (نیازمند تأیید ادمین) |
 
-مجوز **ایجاد** مقاله در `StorePostRequest::authorize()` بررسی می‌شود؛ مجوز **ویرایش/حذف** مقاله
-(مالک بودن یا ادمین بودن) در `App\Policies\PostPolicy` — چون این تصمیم به یک رکورد مشخص وابسته است
-و Policy دقیقاً برای همین سناریو طراحی شده. بقیه‌ی چک‌های نقش‌محور ساده (مثل «فقط ادمین») مستقیم در
-کنترلر با `abort_unless()` انجام می‌شوند.
-
-## 🧪 تست
-
-تست‌ها روی **SQLite حافظه‌ای** اجرا می‌شن (تنظیم‌شده در `phpunit.xml`) تا سریع باشن و نیازی به
-دیتابیس MySQL واقعی نداشته باشن. مهاجرت‌ها طوری نوشته شدن که با هر دو درایور کار کنن — مثلاً ایندکس
-FullText فقط وقتی درایور `mysql` باشه ساخته می‌شه.
+## تست
 
 ```bash
 php artisan test
-
-# فیلتر روی یک فایل خاص
-php artisan test --filter=PostTest
-
-# با گزارش پوشش (نیاز به Xdebug یا PCOV)
-php artisan test --coverage
 ```
 
-| فایل | چه چیزی تست می‌شه |
-|---|---|
-| `tests/Feature/AuthTest.php` | ثبت‌نام، ولیدیشن، ورود/خروج، `/auth/me` |
-| `tests/Feature/PostTest.php` | فیلتر مقالات منتشرشده، شمارش بازدید، مجوز ویرایش/حذف |
-| `tests/Feature/CategoryTest.php` | CRUD محدود به نقش ادمین، یکتا بودن نام |
-| `tests/Feature/TagTest.php` | ایجاد توسط author، حذف فقط توسط admin |
-| `tests/Feature/CommentTest.php` | تأیید خودکار نظر author، نیاز به تأیید نظر reader |
-| `tests/Feature/SearchTest.php` | جستجوی فول‌تکست، استثنا کردن پیش‌نویس‌ها |
-| `tests/Feature/UploadTest.php` | مجوز آپلود، رد فایل غیرتصویری |
-| `tests/Unit/PostModelTest.php` | اسلاگ یکتا، fallback سئو، محاسبه‌ی زمان مطالعه، اسکوپ‌ها |
+## License
 
-> برای تست `UploadTest`، اکستنشن **GD** یا **Imagick** فعال باشه (مورد نیاز Intervention Image).
-
-## 📁 ساختار پروژه
-
-```
-app/
-├── Http/
-│   ├── Controllers/Api/   # کنترلرهای REST
-│   ├── Requests/          # Form Request Validation (+ مجوز ایجاد مقاله)
-│   ├── Resources/         # شکل‌دهی خروجی JSON
-│   └── Middleware/        # میدل‌ور نقش ادمین
-├── Models/                # User, Post, Category, Tag, Comment
-└── Policies/               # PostPolicy (مجوز ویرایش/حذف بر پایه‌ی مالکیت)
-
-database/
-├── migrations/
-├── factories/
-└── seeders/
-
-tests/
-├── Feature/
-└── Unit/
-```
-
-
-</div>
+این پروژه تحت مجوز [MIT](LICENSE) منتشر شده است.
