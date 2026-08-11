@@ -2,14 +2,13 @@
 
 # 📝 Blog API
 
-**بک‌اند یک وبلاگ حرفه‌ای — Laravel API خالص، برای مصرف توسط فرانت‌اند Nuxt 3 (SSR)**
+**بک‌اند یک وبلاگ حرفه‌ای — Laravel API ، برای استفاده توسط فرانت‌اند  (SSR)**
 
 [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)](https://php.net)
 [![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
 [![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com)
 [![Sanctum](https://img.shields.io/badge/Auth-Sanctum-blue)](https://laravel.com/docs/sanctum)
 [![Tests](https://img.shields.io/badge/Tests-PHPUnit-3776AB)](#-تست)
-[![License](https://img.shields.io/badge/License-MIT-green)](#-license)
 
 </div>
 
