@@ -1,66 +1,210 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 📝 Blog API
 
-## About Laravel
+**بک‌اند یک وبلاگ حرفه‌ای — Laravel API خالص، برای مصرف توسط فرانت‌اند Nuxt 3 (SSR)**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)](https://php.net)
+[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
+[![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com)
+[![Sanctum](https://img.shields.io/badge/Auth-Sanctum-blue)](https://laravel.com/docs/sanctum)
+[![Tests](https://img.shields.io/badge/Tests-PHPUnit-3776AB)](#-تست)
+[![License](https://img.shields.io/badge/License-MIT-green)](#-license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+<div dir="rtl" align="right">
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📖 فهرست
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- [درباره پروژه](#-درباره-پروژه)
+- [امکانات](#-امکانات)
+- [پشته فناوری](#-پشته-فناوری)
+- [شروع سریع](#-شروع-سریع)
+- [متغیرهای محیطی](#-متغیرهای-محیطی)
+- [مستندات API](#-مستندات-api)
+- [مدل مجوزدهی](#-مدل-مجوزدهی)
+- [تست](#-تست)
+- [ساختار پروژه](#-ساختار-پروژه)
+- [مشارکت](#-مشارکت)
+- [لایسنس](#-license)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## ✨ امکانات
 
-### Premium Partners
+- 📰 مدیریت کامل مقالات: عنوان، اسلاگ خودکار و یکتا، خلاصه، محتوای HTML، کاور، وضعیت (پیش‌نویس/منتشر/بایگانی)، حذف نرم (soft delete)
+- 🗂 دسته‌بندی و تگ (رابطه‌ی چند‌به‌چند)
+- 💬 نظرات تودرتو (Reply) با گردش تأیید (`pending` → `approved`/`rejected`)
+- 🔍 جستجوی فول‌تکست روی عنوان/خلاصه/محتوا
+- 🖼 آپلود و بهینه‌سازی خودکار تصویر (تبدیل به WebP با Intervention Image v4)
+- 🔐 احراز هویت مبتنی بر توکن با Laravel Sanctum + نقش‌های `admin` / `author` / `reader`
+- 📡 خروجی سئوی آماده در هر مقاله (`meta_title`, `meta_description`, `og_image`) + فید RSS
+- ✅ Form Request Validation، API Resource برای شکل‌دهی خروجی JSON، Policy برای مجوزدهی
+- 🧪 پوشش تست کامل با PHPUnit (روی SQLite حافظه‌ای، بدون نیاز به MySQL واقعی)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 🛠  فناوری
 
-## Contributing
+| بخش | فناوری |
+|---|---|
+| فریمورک | Laravel 11 |
+| دیتابیس | MySQL 8 (تست‌ها: SQLite in-memory) |
+| احراز هویت | Laravel Sanctum (Bearer Token) |
+| پردازش تصویر | Intervention Image v4 |
+| اسلاگ خودکار | spatie/laravel-sluggable |
+| تست | PHPUnit |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 شروع سریع
 
-## Code of Conduct
+### پیش‌نیازها
+- PHP 8.2+ (با اکستنشن GD یا Imagick)
+- Composer
+- MySQL 8+
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### نصب
 
-## Security Vulnerabilities
+```bash
+# ۱) کلون پروژه
+git clone <این-ریپو> backend
+cd backend
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# ۲) نصب پکیج‌ها
+composer install
 
-## License
+# ۳) فایل env
+cp .env.example .env
+php artisan key:generate
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# ۴) تنظیم دیتابیس در .env
+# DB_DATABASE, DB_USERNAME, DB_PASSWORD رو با اطلاعات MySQL خودت پر کن
+
+# ۵) اجرای مهاجرت‌ها + دیتای نمونه
+php artisan migrate --seed
+
+# ۶) لینک استوریج (برای دسترسی به تصاویر آپلودشده)
+php artisan storage:link
+
+# ۷) اجرا
+php artisan serve
+```
+
+API روی `http://localhost:8000/api` در دسترس خواهد بود.
+
+> بعد از seed، یک کاربر ادمین با مشخصات زیر ساخته می‌شود:
+> **Email:** `admin@example.com` — **Password:** `password`
+> (حتماً در محیط production این رمز رو عوض کن.)
+
+## ⚙️ متغیرهای محیطی
+
+| متغیر | توضیح |
+|---|---|
+| `DB_*` | اطلاعات اتصال MySQL |
+| `FRONTEND_URL` | آدرس فرانت‌اند Nuxt — برای CORS و لینک‌سازی در فید RSS |
+| `SANCTUM_STATEFUL_DOMAINS` | دامنه‌های مجاز برای Sanctum |
+| `FILESYSTEM_DISK` | دیسک پیش‌فرض آپلود (`public`) |
+
+فایل کامل نمونه در [`.env.example`](.env.example) موجود است.
+
+## 📚 مستندات API
+
+### مسیرهای عمومی (بدون نیاز به توکن)
+
+| Method | Endpoint | توضیح |
+|---|---|---|
+| POST | `/api/auth/register` | ثبت‌نام |
+| POST | `/api/auth/login` | ورود |
+| GET | `/api/posts` | لیست مقالات منتشرشده (صفحه‌بندی‌شده، فیلتر با `?category=` و `?tag=`) |
+| GET | `/api/posts/{slug}` | نمایش یک مقاله |
+| GET | `/api/categories` | لیست دسته‌بندی‌ها |
+| GET | `/api/categories/{slug}` | نمایش یک دسته‌بندی |
+| GET | `/api/tags` | لیست تگ‌ها |
+| GET | `/api/tags/{slug}` | نمایش یک تگ |
+| GET | `/api/search?q=` | جستجوی فول‌تکست |
+| GET | `/api/feed` | فید RSS |
+| GET | `/api/posts/{post}/comments` | نظرات تأییدشده‌ی یک مقاله |
+
+### مسیرهای نیازمند احراز هویت (`Authorization: Bearer {token}`)
+
+| Method | Endpoint | دسترسی | توضیح |
+|---|---|---|---|
+| POST | `/api/auth/logout` | همه | خروج |
+| GET | `/api/auth/me` | همه | اطلاعات کاربر جاری |
+| POST | `/api/posts/{post}/comments` | همه | ثبت نظر |
+| DELETE | `/api/comments/{comment}` | مالک نظر / ادمین | حذف نظر |
+| POST | `/api/uploads` | author/admin | آپلود تصویر |
+| GET/POST | `/api/manage/posts` | author/admin | لیست / ایجاد مقاله |
+| GET/PUT/DELETE | `/api/manage/posts/{post}` | مالک مقاله / ادمین | ویرایش / حذف مقاله |
+| POST | `/api/tags` | author/admin | ایجاد تگ |
+| POST/PUT/DELETE | `/api/categories...` | فقط admin | مدیریت دسته‌بندی |
+| DELETE | `/api/tags/{tag}` | فقط admin | حذف تگ |
+| GET | `/api/manage/comments/pending` | فقط admin | نظرات در انتظار تأیید |
+| PATCH | `/api/manage/comments/{comment}` | فقط admin | تأیید/رد نظر |
+
+## 🔒 مدل مجوزدهی
+
+| نقش | دسترسی |
+|---|---|
+| `admin` | مدیریت کامل: مقاله، دسته‌بندی، تگ، تأیید/رد نظرات |
+| `author` | ایجاد/ویرایش/حذف مقالات خودش، ثبت تگ |
+| `reader` | ثبت‌نام، ورود، ثبت نظر (نیازمند تأیید ادمین) |
+
+مجوز **ایجاد** مقاله در `StorePostRequest::authorize()` بررسی می‌شود؛ مجوز **ویرایش/حذف** مقاله
+(مالک بودن یا ادمین بودن) در `App\Policies\PostPolicy` — چون این تصمیم به یک رکورد مشخص وابسته است
+و Policy دقیقاً برای همین سناریو طراحی شده. بقیه‌ی چک‌های نقش‌محور ساده (مثل «فقط ادمین») مستقیم در
+کنترلر با `abort_unless()` انجام می‌شوند.
+
+## 🧪 تست
+
+تست‌ها روی **SQLite حافظه‌ای** اجرا می‌شن (تنظیم‌شده در `phpunit.xml`) تا سریع باشن و نیازی به
+دیتابیس MySQL واقعی نداشته باشن. مهاجرت‌ها طوری نوشته شدن که با هر دو درایور کار کنن — مثلاً ایندکس
+FullText فقط وقتی درایور `mysql` باشه ساخته می‌شه.
+
+```bash
+php artisan test
+
+# فیلتر روی یک فایل خاص
+php artisan test --filter=PostTest
+
+# با گزارش پوشش (نیاز به Xdebug یا PCOV)
+php artisan test --coverage
+```
+
+| فایل | چه چیزی تست می‌شه |
+|---|---|
+| `tests/Feature/AuthTest.php` | ثبت‌نام، ولیدیشن، ورود/خروج، `/auth/me` |
+| `tests/Feature/PostTest.php` | فیلتر مقالات منتشرشده، شمارش بازدید، مجوز ویرایش/حذف |
+| `tests/Feature/CategoryTest.php` | CRUD محدود به نقش ادمین، یکتا بودن نام |
+| `tests/Feature/TagTest.php` | ایجاد توسط author، حذف فقط توسط admin |
+| `tests/Feature/CommentTest.php` | تأیید خودکار نظر author، نیاز به تأیید نظر reader |
+| `tests/Feature/SearchTest.php` | جستجوی فول‌تکست، استثنا کردن پیش‌نویس‌ها |
+| `tests/Feature/UploadTest.php` | مجوز آپلود، رد فایل غیرتصویری |
+| `tests/Unit/PostModelTest.php` | اسلاگ یکتا، fallback سئو، محاسبه‌ی زمان مطالعه، اسکوپ‌ها |
+
+> برای تست `UploadTest`، اکستنشن **GD** یا **Imagick** فعال باشه (مورد نیاز Intervention Image).
+
+## 📁 ساختار پروژه
+
+```
+app/
+├── Http/
+│   ├── Controllers/Api/   # کنترلرهای REST
+│   ├── Requests/          # Form Request Validation (+ مجوز ایجاد مقاله)
+│   ├── Resources/         # شکل‌دهی خروجی JSON
+│   └── Middleware/        # میدل‌ور نقش ادمین
+├── Models/                # User, Post, Category, Tag, Comment
+└── Policies/               # PostPolicy (مجوز ویرایش/حذف بر پایه‌ی مالکیت)
+
+database/
+├── migrations/
+├── factories/
+└── seeders/
+
+tests/
+├── Feature/
+└── Unit/
+```
+
+
+</div>
