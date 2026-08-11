@@ -1,0 +1,402 @@
+{
+  "info": {
+    "name": "Blog API (Laravel)",
+    "description": "بک‌اند وبلاگ حرفه‌ای — Laravel + Sanctum (Bearer Token). برای شروع، مقدار `base_url` رو چک کن و از فولدر Auth یکی از دو ریکوئست Login/Register رو بزن تا متغیر `token` خودکار پر بشه.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000/api", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "post_slug", "value": "", "type": "string" },
+    { "key": "post_id", "value": "", "type": "string" },
+    { "key": "category_slug", "value": "", "type": "string" },
+    { "key": "category_id", "value": "", "type": "string" },
+    { "key": "tag_slug", "value": "", "type": "string" },
+    { "key": "tag_id", "value": "", "type": "string" },
+    { "key": "comment_id", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"سارا احمدی\",\n  \"email\": \"sara@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/register", "host": ["{{base_url}}"], "path": ["auth", "register"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('token', json.token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/login", "host": ["{{base_url}}"], "path": ["auth", "login"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('token', json.token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/auth/me", "host": ["{{base_url}}"], "path": ["auth", "me"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{base_url}}/auth/logout", "host": ["{{base_url}}"], "path": ["auth", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts (Public)",
+      "item": [
+        {
+          "name": "List Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/posts?page=1",
+              "host": ["{{base_url}}"],
+              "path": ["posts"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "category", "value": "{{category_slug}}", "disabled": true },
+                { "key": "tag", "value": "{{tag_slug}}", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Show Post",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/posts/{{post_slug}}", "host": ["{{base_url}}"], "path": ["posts", "{{post_slug}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts (Manage — author/admin)",
+      "item": [
+        {
+          "name": "List My Posts",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/manage/posts", "host": ["{{base_url}}"], "path": ["manage", "posts"] }
+          }
+        },
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"مقاله تستی از پستمن\",\n  \"excerpt\": \"خلاصه کوتاه\",\n  \"content\": \"<p>محتوای مقاله</p>\",\n  \"category_id\": null,\n  \"status\": \"draft\",\n  \"tags\": []\n}"
+            },
+            "url": { "raw": "{{base_url}}/manage/posts", "host": ["{{base_url}}"], "path": ["manage", "posts"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('post_id', json.id);",
+                  "    pm.collectionVariables.set('post_slug', json.slug);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Edit Post (fetch for editing)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/manage/posts/{{post_id}}", "host": ["{{base_url}}"], "path": ["manage", "posts", "{{post_id}}"] }
+          }
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"مقاله تستی (ویرایش‌شده)\",\n  \"status\": \"published\",\n  \"published_at\": \"2026-01-01T00:00:00Z\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/manage/posts/{{post_id}}", "host": ["{{base_url}}"], "path": ["manage", "posts", "{{post_id}}"] }
+          }
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/manage/posts/{{post_id}}", "host": ["{{base_url}}"], "path": ["manage", "posts", "{{post_id}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/categories", "host": ["{{base_url}}"], "path": ["categories"] }
+          }
+        },
+        {
+          "name": "Show Category",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/categories/{{category_slug}}", "host": ["{{base_url}}"], "path": ["categories", "{{category_slug}}"] }
+          }
+        },
+        {
+          "name": "Create Category (admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"دسته جدید\",\n  \"description\": \"توضیح دسته\"\n}" },
+            "url": { "raw": "{{base_url}}/categories", "host": ["{{base_url}}"], "path": ["categories"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('category_id', json.id);",
+                  "    pm.collectionVariables.set('category_slug', json.slug);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Category (admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"دسته ویرایش‌شده\"\n}" },
+            "url": { "raw": "{{base_url}}/categories/{{category_id}}", "host": ["{{base_url}}"], "path": ["categories", "{{category_id}}"] }
+          }
+        },
+        {
+          "name": "Delete Category (admin)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/categories/{{category_id}}", "host": ["{{base_url}}"], "path": ["categories", "{{category_id}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "item": [
+        {
+          "name": "List Tags",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/tags", "host": ["{{base_url}}"], "path": ["tags"] }
+          }
+        },
+        {
+          "name": "Show Tag",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/tags/{{tag_slug}}", "host": ["{{base_url}}"], "path": ["tags", "{{tag_slug}}"] }
+          }
+        },
+        {
+          "name": "Create Tag (author/admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"لاراول\"\n}" },
+            "url": { "raw": "{{base_url}}/tags", "host": ["{{base_url}}"], "path": ["tags"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('tag_id', json.id);",
+                  "    pm.collectionVariables.set('tag_slug', json.slug);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete Tag (admin)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/tags/{{tag_id}}", "host": ["{{base_url}}"], "path": ["tags", "{{tag_id}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "List Comments for a Post",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/posts/{{post_id}}/comments", "host": ["{{base_url}}"], "path": ["posts", "{{post_id}}", "comments"] }
+          }
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"body\": \"نظر تستی از پستمن\",\n  \"parent_id\": null\n}" },
+            "url": { "raw": "{{base_url}}/posts/{{post_id}}/comments", "host": ["{{base_url}}"], "path": ["posts", "{{post_id}}", "comments"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('comment_id', json.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete Comment (owner/admin)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/comments/{{comment_id}}", "host": ["{{base_url}}"], "path": ["comments", "{{comment_id}}"] }
+          }
+        },
+        {
+          "name": "Pending Comments (admin)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/manage/comments/pending", "host": ["{{base_url}}"], "path": ["manage", "comments", "pending"] }
+          }
+        },
+        {
+          "name": "Moderate Comment — Approve (admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"approved\"\n}" },
+            "url": { "raw": "{{base_url}}/manage/comments/{{comment_id}}", "host": ["{{base_url}}"], "path": ["manage", "comments", "{{comment_id}}"] }
+          }
+        },
+        {
+          "name": "Moderate Comment — Reject (admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"rejected\"\n}" },
+            "url": { "raw": "{{base_url}}/manage/comments/{{comment_id}}", "host": ["{{base_url}}"], "path": ["manage", "comments", "{{comment_id}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search & Feed",
+      "item": [
+        {
+          "name": "Search Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/search?q=لاراول",
+              "host": ["{{base_url}}"],
+              "path": ["search"],
+              "query": [{ "key": "q", "value": "لاراول" }]
+            }
+          }
+        },
+        {
+          "name": "RSS Feed",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/feed", "host": ["{{base_url}}"], "path": ["feed"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "item": [
+        {
+          "name": "Upload Image (author/admin)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/uploads", "host": ["{{base_url}}"], "path": ["uploads"] }
+          }
+        }
+      ]
+    }
+  ]
+}
