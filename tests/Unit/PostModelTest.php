@@ -52,7 +52,7 @@ class PostModelTest extends TestCase
 
     public function test_reading_time_is_calculated_from_word_count(): void
     {
-        $content = collect(range(1, 400))->map(fn () => 'کلمه')->implode(' ');
+        $content = collect(range(1, 400))->map(fn() => 'کلمه')->implode(' ');
 
         $post = Post::factory()->make(['content' => "<p>{$content}</p>"]);
 
@@ -90,5 +90,12 @@ class PostModelTest extends TestCase
         Post::factory()->count(3)->create();
 
         $this->assertEquals(3, Post::search(null)->count());
+    }
+
+    public function test_publishing_without_a_date_sets_published_at(): void
+    {
+        $post = Post::factory()->create(['status' => 'published', 'published_at' => null]);
+
+        $this->assertNotNull($post->fresh()->published_at);
     }
 }

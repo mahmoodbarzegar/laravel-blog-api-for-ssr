@@ -20,8 +20,8 @@ class PostController extends Controller
         $posts = Post::query()
             ->with(['author', 'category', 'tags'])
             ->published()
-            ->when($request->category, fn ($q, $slug) => $q->whereHas('category', fn ($q) => $q->where('slug', $slug)))
-            ->when($request->tag, fn ($q, $slug) => $q->whereHas('tags', fn ($q) => $q->where('slug', $slug)))
+            ->when($request->category, fn($q, $slug) => $q->whereHas('category', fn($q) => $q->where('slug', $slug)))
+            ->when($request->tag, fn($q, $slug) => $q->whereHas('tags', fn($q) => $q->where('slug', $slug)))
             ->latest('published_at')
             ->paginate(9)
             ->withQueryString();
@@ -34,7 +34,7 @@ class PostController extends Controller
      */
     public function show(string $slug)
     {
-        $post = Post::with(['author', 'category', 'tags', 'comments.user', 'comments.replies.user'])
+        $post = Post::with(['author', 'category', 'tags'])
             ->published()
             ->where('slug', $slug)
             ->firstOrFail();
@@ -53,7 +53,7 @@ class PostController extends Controller
 
         $posts = Post::query()
             ->with(['author', 'category'])
-            ->when(! $user->isAdmin(), fn ($q) => $q->where('author_id', $user->id))
+            ->when(! $user->isAdmin(), fn($q) => $q->where('author_id', $user->id))
             ->latest()
             ->paginate(15);
 

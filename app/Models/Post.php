@@ -36,7 +36,14 @@ class Post extends Model
             'views' => 'integer',
         ];
     }
-
+    protected static function booted(): void
+    {
+        static::saving(function (Post $post) {
+            if ($post->status === 'published' && ! $post->published_at) {
+                $post->published_at = now();
+            }
+        });
+    }
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

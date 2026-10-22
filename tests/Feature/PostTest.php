@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -162,4 +163,16 @@ class PostTest extends TestCase
             'status' => 'draft',
         ], $overrides);
     }
+
+
+
+    public function test_post_detail_does_not_expose_pending_comments(): void
+{
+    $post = Post::factory()->create(['status' => 'published', 'published_at' => now()->subDay()]);
+    Comment::factory()->create(['post_id' => $post->id, 'status' => 'pending']);
+
+    $this->getJson("/api/posts/{$post->slug}")
+        ->assertOk()
+        ->assertJsonMissingPath('comments');
+}
 }

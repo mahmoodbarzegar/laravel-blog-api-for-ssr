@@ -23,7 +23,7 @@ class PostResource extends JsonResource
             'author' => new UserResource($this->whenLoaded('author')),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'tags' => TagResource::collection($this->whenLoaded('tags')),
-            'comments' => CommentResource::collection($this->whenLoaded('comments')),
+            // 'comments' => CommentResource::collection($this->whenLoaded('comments')),
             'comments_count' => $this->whenCounted('comments'),
             'seo' => [
                 'title' => $this->seo_title,
